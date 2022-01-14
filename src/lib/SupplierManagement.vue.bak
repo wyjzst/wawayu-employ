@@ -1,0 +1,375 @@
+<template>
+  <div class="main mt46">
+    <van-nav-bar
+        fixed="fixed"
+        title="供应商管理"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+    <div class="fixed">
+      <van-cell is-link @click="showPopup">擅长项目筛选</van-cell>
+      <van-popup v-model:show="show"></van-popup>
+      <van-cell>
+        <div class="flex-center">
+          <van-dropdown-menu
+              active-color="#1989fa"
+          >
+            <van-dropdown-item v-model="value1" :options="option1" />
+          </van-dropdown-menu>
+          <van-search
+              v-model="value"
+              show-action
+              placeholder="请输入搜索关键词"
+              @search="onSearch"
+          >
+            <template #action>
+              <div @click="onSearch">搜索</div>
+            </template>
+          </van-search>
+        </div>
+      </van-cell>
+      <van-action-sheet v-model:show="show" title="擅长项目">
+        <div class="content">
+          <div class="nav">
+            <div class="top-bar">
+              <div>2D</div>
+              <div>全选</div>
+            </div>
+            <ul>
+<!--              <li v-for="tag in tagList" :key="tag.id"-->
+<!--                  :class="{selected: selectedTags.indexOf(tag)>=0}"-->
+<!--                  @click="toggle(tag)">{{tag.name}}-->
+<!--              </li>-->
+
+
+              <li>设计稿</li>
+              <li>一原</li>
+              <li>二原</li>
+              <li>动上</li>
+              <li>摄影</li>
+              <li>背景</li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>3D</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li>人物模型</li>
+              <li>人物材质</li>
+              <li>场景模型</li>
+              <li>场景材质</li>
+              <li>绑定</li>
+              <li>动画</li>
+              <li>特效</li>
+              <li>灯光</li>
+              <li>渲染</li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>平面</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li>海报</li>
+              <li>插画</li>
+              <li>立绘</li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>大后期</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li>配音</li>
+              <li>音乐</li>
+              <li>音效/混音</li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>前期</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li>分镜</li>
+              <li>剧本</li>
+              <li>人设</li>
+              <li>场设</li>
+              <li>道具</li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>其他</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li>其他</li>
+              <li>3渲2</li>
+            </ul>
+          </div>
+        </div>
+      </van-action-sheet>
+    </div>
+    <section>
+      <div class="box">
+        <div class="h20"></div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-user.png" alt=""></div>
+          <div class="l">联系人:</div>
+          <div>{{1}}</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-tel.png" alt=""></div>
+          <div class="l">联系电话:</div>
+          <div>{{ 2 }}</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">企业名称:</div>
+          <div>{{ 3 }}</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">擅长项目:</div>
+          <div>
+            3D-人物模型,3D-人物材质,3D-场景模型,3D-场景材质,3D-绑定,3D-动画,3D-特效,3D-灯光,3D-渲染,前期-分镜,前期-剧本,平面-海报,平面-插画,平面-立绘,前期-人设,前期-场设,前期-道具,
+          </div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">所在地:</div>
+          <div>浙江省杭州市</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">上次登录:</div>
+          <div>2020-07-20</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">备注:</div>
+          <div>动画</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">认证状态:</div>
+          <div>审核通过</div>
+        </div>
+        <div class="h20"></div>
+        <div class="h20"></div>
+        <div class="flex-flex-end">
+          <router-link to="/supplierDetail">
+            <van-button size="small" type="primary" style="margin-right: 10px">查看详情</van-button>
+            <van-button plain size="small" type="primary" style="margin-right:20px">提醒</van-button>
+          </router-link>
+        </div>
+        <div class="h20"></div>
+      </div>
+      <div class="box">
+        <div class="h20"></div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-user.png" alt=""></div>
+          <div class="l">联系人:</div>
+          <div>王建国</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-tel.png" alt=""></div>
+          <div class="l">联系电话:</div>
+          <div>14821219831</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">企业名称:</div>
+          <div>杭州娃娃鱼</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">擅长项目:</div>
+          <div>
+            3D-人物模型,3D-人物材质,3D-场景模型,3D-场景材质,3D-绑定,3D-动画,3D-特效,3D-灯光,3D-渲染,前期-分镜,前期-剧本,平面-海报,平面-插画,平面-立绘,前期-人设,前期-场设,前期-道具,
+          </div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">所在地:</div>
+          <div>浙江省杭州市</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">上次登录:</div>
+          <div>2020-07-20</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">备注:</div>
+          <div>动画</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">认证状态:</div>
+          <div>审核通过</div>
+        </div>
+        <div class="h20"></div>
+        <div class="h20"></div>
+        <div class="flex-flex-end">
+          <router-link to="/supplierDetail">
+            <van-button size="small" type="primary" style="margin-right: 10px">查看详情</van-button>
+            <van-button plain size="small" type="primary" style="margin-right:20px">提醒</van-button>
+          </router-link>
+        </div>
+        <div class="h20"></div>
+      </div>
+      <div class="h20"></div>
+    </section>
+  </div>
+</template>
+
+
+<script>
+  import {ref} from 'vue'
+  import {router} from "../router"
+  import {List} from "/src/store/list"
+
+
+  export default {
+    components: {},
+    setup() {
+      const onClickLeft = () => router.back()
+      const show = ref(false)
+      const showPopup = () => {
+        show.value = true
+      }
+
+      const value1 = ref(0);
+
+      const option1 = [
+        { text: '全部', value: 0 },
+        { text: '资料未认证', value: 1 },
+        { text: '未认证', value: 2 },
+        { text: '待审核', value: 3 },
+        { text: '审核通过', value: 4 },
+      ];
+
+
+      return {
+        onClickLeft,
+        show,
+        showPopup,
+        value1,
+        option1,
+      }
+    },
+
+    data() {
+      return {
+        List
+      }
+  }
+
+  }
+</script>
+
+<style lang="scss" scoped>
+  .van-overlay {
+    background: rgba(0, 0, 0, .5);
+  }
+
+  .van-dropdown-menu__bar {
+    box-shadow: none;
+  }
+
+  .h20 {
+    height: 20px;
+  }
+
+  .main {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .flex > .van-cell__value {
+    display: flex;
+  }
+
+  section {
+    margin-top: 128px;
+  }
+
+  .tittle {
+    position: fixed;
+    font-size: 0.4rem;
+    line-height: 40px;
+    background: #fff;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0px 16px;
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      border-top: 1px solid #c2c2c2;
+      line-height: 40px;
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          background: rgb(242, 242, 242);
+          margin: 5px;
+          line-height: 30px;
+          padding: 0 20px;
+          border-radius: 30px;
+        }
+        &.selected {
+          background:cyan;
+          color:pink;
+        }
+      }
+
+      img {
+        width: 20px;
+      }
+    }
+  }
+
+  .box {
+    background: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 20px 20px;
+
+    .icon {
+      width: 25px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+
+    .icon img {
+      width: 100%;
+    }
+
+    .l {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+  }
+
+
+</style>

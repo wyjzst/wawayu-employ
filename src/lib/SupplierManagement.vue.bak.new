@@ -1,0 +1,512 @@
+<template>
+  <div class="main mt46">
+    <van-nav-bar
+        fixed="fixed"
+        title="供应商管理"
+        left-text="返回"
+        left-arrow
+        @click-left="onClickLeft"
+    />
+    <div class="fixed">
+      <van-cell is-link @click="showPopup">擅长项目筛选</van-cell>
+      <van-popup v-model:show="show"></van-popup>
+      <van-cell>
+        <div class="flex-center">
+          <van-popover v-model:show="showPopover" :actions="actions" @select="onSelect">
+            <template #reference>
+              <van-button type="primary" size="small" style="width: 1.2rem;">全部</van-button>
+            </template>
+          </van-popover>
+          <van-search
+              v-model="keyword"
+              class="input"
+              show-action
+              placeholder="请输入搜索关键词"
+              @search="search"
+          >
+            <template #action>
+              <div @click="search">搜索</div>
+            </template>
+          </van-search>
+        </div>
+      </van-cell>
+      <van-action-sheet v-model:show="show" title="擅长项目">
+        <div class="content">
+          <div class="nav">
+            <div class="top-bar">
+              <div>2D</div>
+              <div
+                  @click="selectAll()"
+                  :class="{ selected: selectedTags===skill[0]}"
+              >全选
+              </div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[0]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >{{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>3D</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[1]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>平面</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[2]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>大后期</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[3]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>前期</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[4]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="nav">
+            <div class="top-bar">
+              <div>其他</div>
+              <div>全选</div>
+            </div>
+            <ul>
+              <li v-for="tag in skill[5]" :key="tag"
+                  @click="toggle(tag)"
+                  :class="{ selected: selectedTags.indexOf(tag)>=0}"
+              >
+                {{ tag }}
+              </li>
+            </ul>
+          </div>
+          <div class="commit-btn">
+            <div class="reset" @click="clear()">重置</div>
+            <div class="confirm" @click="this.flag=!this.flag">完成</div>
+          </div>
+        </div>
+      </van-action-sheet>
+    </div>
+    <section>
+      <div class="box">
+        <div class="h20"></div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-user.png" alt=""></div>
+          <div class="l">联系人:</div>
+          <div class="flex-center">王建国</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-tel.png" alt=""></div>
+          <div class="l">联系电话:</div>
+          <div class="flex-center">14821219831</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">企业名称:</div>
+          <div class="flex-center">杭州娃娃鱼</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">擅长项目:</div>
+          <div class="item-list">
+            <span v-for="item in selectedTags" :key="item"
+            >{{ item + "," }}</span>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">所在地:</div>
+          <div class="flex-center">浙江省杭州市</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">上次登录:</div>
+          <div class="flex-center">2020-07-20</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">备注:</div>
+          <div class="flex-center">动画</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l flex-center">认证状态:</div>
+          <div class="flex-center">审核通过</div>
+        </div>
+        <div class="h20"></div>
+        <div class="h20"></div>
+        <div class="flex-flex-end">
+          <router-link to="/supplierDetail">
+            <van-button size="small" type="primary" style="margin-right: 10px">查看详情</van-button>
+            <van-button plain size="small" type="primary" style="margin-right:20px">提醒</van-button>
+          </router-link>
+        </div>
+        <div class="h20"></div>
+      </div>
+      <div class="box">
+        <div class="h20"></div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-user.png" alt=""></div>
+          <div class="l">联系人:</div>
+          <div class="flex-center">王建国</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-tel.png" alt=""></div>
+          <div class="l">联系电话:</div>
+          <div class="flex-center">14821219831</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">企业名称:</div>
+          <div class="flex-center">杭州娃娃鱼</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">擅长项目:</div>
+          <div class="">
+            <span v-for="item in selectedTags" :key="item"
+            >{{ item + "," }}</span>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">所在地:</div>
+          <div class="flex-center">浙江省杭州市</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">上次登录:</div>
+          <div class="flex-center">2020-07-20</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l">备注:</div>
+          <div class="flex-center">动画</div>
+        </div>
+        <div class="flex">
+          <div class="icon"><img src="../assets/image/supplier-company.png" alt=""></div>
+          <div class="l flex-center">认证状态:</div>
+          <div class="flex-center">审核通过</div>
+        </div>
+        <div class="h20"></div>
+        <div class="h20"></div>
+        <div class="flex-flex-end">
+          <router-link to="/supplierDetail">
+            <van-button size="small" type="primary" style="margin-right: 10px">查看详情</van-button>
+            <van-button plain size="small" type="primary" style="margin-right:20px">提醒</van-button>
+          </router-link>
+        </div>
+        <div class="h20"></div>
+      </div>
+      <div class="h20"></div>
+    </section>
+  </div>
+</template>
+
+
+<script>
+  import {ref} from 'vue'
+  import {router} from "../router"
+
+  export default {
+    components: {},
+    setup() {
+      const onClickLeft = () => router.back()
+      const show = ref(false)
+      const showPopup = () => {
+        show.value = true
+      }
+      const showPopover = ref(false)
+
+      // 通过 actions 属性来定义菜单选项
+      const actions = [
+        {text: '全部'},
+        {text: '资料未完善'},
+        {text: '未认证'},
+        {text: '待审核'},
+        {text: '审核通过'},
+      ]
+      const onSelect = (action) => Toast(action.text)
+      const tags = [
+        {title: '2D', options: ["设计稿", "一原", "二原", "动上", "摄影", "背景"]},
+        {title: '3D', options: ["人物模型", "人物材质", "场景模型", "场景材质", "绑定", "动画", "特效", "灯光", "渲染"]},
+        {title: '平面', options: ["海报", "插画", "立绘"]},
+        {title: '大后期', options: ["配音", "音乐", "音效/混音"]},
+        {title: '前期', options: ["分镜", "剧本", "人设", "场设", "道具"]},
+        {title: '其他', options: ["其他", "3渲2"]}
+      ]
+
+      // 擅长项目筛选分类组合
+      const skill = tags.map(item => item.options)
+      console.log(skill)
+      const type = tags.map(item => item.title)
+      console.log(type)
+      const selectedTags = ref([])
+
+      //标签选择功能
+      const toggle = (tag) => {
+        const index = selectedTags.value.indexOf(tag)
+        if (index >= 0) {
+          selectedTags.value.splice(index, 1)
+        } else {
+          selectedTags.value.push(tag)
+        }
+      }
+
+      //全选
+      const selectAll = () => {
+        const chooseAll = tags.value
+        const aa = Object.values(chooseAll)
+        if (selectedTags.value.length <= 0) {
+          selectedTags.value.push(aa)
+        } else {
+          selectedTags.value.splice(0, chooseAll.length)
+        }
+      }
+
+      //重置选项
+      const clear = () => {
+        selectedTags.value.splice(0, selectedTags.value.length)
+      }
+
+      //搜索功能以及高亮显示
+      //
+      const keyword = ref('')
+      const isShowTip = false
+
+      console.log(tags)
+
+
+      return {
+        onClickLeft,
+        show,
+        showPopup,
+        actions,
+        onSelect,
+        showPopover,
+        tags,
+        selectedTags,
+        toggle,
+        selectAll,
+        skill,
+        type,
+        clear,
+        keyword,
+        isShowTip,
+
+      }
+    },
+
+    methods: {
+      search() {
+        if (this.keyword === '') {   //如果没有输入内容，不让往下执行
+          return
+        }
+        this.resultList = []   //每次搜索对结果数组做初始化
+        this.tags.forEach((item) => {  //把初始数据进行遍历
+          /**
+           下面是把初始数据中的每一条数据的四个字段分别去和输入的内容进行匹配，
+           如果某一字段中包含输入的内容，就往resultList中加
+           **/
+          if (item.title.indexOf(this.keyword) > -1 ||
+              item.options.indexOf(this.keyword) > -1) {
+            this.resultList.push(item)
+          }
+        })
+        if (this.resultList.length === 0) {   //如果没有匹配结果，就显示提示信息
+          console.log("查找失败")
+          this.isShowTip = true
+        }
+        //将得到的每一条数据中的每一个字段进行处理,brightKeyword就是变高亮的方法
+        // this.resultList.map((item) => {  //遍历
+        //   item.title = this.brightKeyword(item.title)
+        //   item.options = this.brightKeyword(item.options)
+        // })
+
+        //     brightKeyword(val) {
+        //   let keyword = this.keyword   //获取输入框输入的内容
+        //   if (val.indexOf(keyword) !== -1) {  //判断这个字段中是否包含keyword
+        //     //如果包含的话，就把这个字段中的那一部分进行替换成html字符
+        //     return val.replace(keyword, `<font color='#42cccc'>${keyword}</font>`)
+        //   } else {
+        //     return val
+        //   }
+        // }
+
+
+      }
+    }
+
+  }
+</script>
+
+<style lang="scss" scoped>
+  .van-overlay {
+    background: rgba(0, 0, 0, .5);
+  }
+
+  .h20 {
+    height: 20px;
+  }
+
+  .main {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .flex > .van-cell__value {
+    display: flex;
+  }
+
+  section {
+    margin-top: 128px;
+  }
+
+  .tittle {
+    position: fixed;
+    font-size: 0.4rem;
+    line-height: 40px;
+    background: #fff;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 16px 60px;;
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+      border-top: 1px solid #c2c2c2;
+      line-height: 40px;
+
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+
+        li {
+          background: rgb(242, 242, 242);
+          margin: 5px;
+          line-height: 30px;
+          padding: 0 20px;
+          border-radius: 30px;
+
+          &.selected {
+            background: #f60;
+            color: white;
+          }
+        }
+      }
+
+      img {
+        width: 20px;
+      }
+    }
+
+    .commit-btn {
+      width: 100%;
+      line-height: 40px;
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      padding: 10px 26px;
+      color: white;
+      background: #fff;
+
+      .reset {
+        width: 50%;
+        text-align: center;
+        border-top-left-radius: 35px;
+        border-bottom-left-radius: 35px;
+        background: -webkit-linear-gradient(left, rgb(254, 196, 0), rgb(254, 156, 0)) no-repeat;
+        box-shadow: 0 2px 4px #f7c7b1;
+      }
+
+      .confirm {
+        width: 50%;
+        text-align: center;
+        border-top-right-radius: 35px;
+        border-bottom-right-radius: 35px;
+        background: -webkit-linear-gradient(left, rgb(255, 112, 0), rgb(255, 137, 5)) no-repeat;
+        box-shadow: 0 2px 4px #f7c7b1;
+      }
+    }
+  }
+
+  .box {
+    background: #fff;
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin: 20px 20px;
+
+    .icon {
+      width: 25px;
+      height: 25px;
+      flex-shrink: 0;
+    }
+
+    .icon img {
+      width: 100%;
+    }
+
+    .l {
+      width: 80px;
+      flex-shrink: 0;
+    }
+
+    .item-list {
+      .result {
+        color: red;
+      }
+    }
+
+  }
+
+
+</style>

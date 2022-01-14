@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ul,
+ol {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    border-bottom: 1px solid;
+    cursor: pointer;
+  }
+}
+h1,h2,h3,h4,h5,h6{
+  font-weight: normal;
+}
+
+body {
+  background: #f1f4f8;
+  font-size: 16px;
+  font-family: -apple-system, "Noto Sans", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Source Han Sans SC", "Source Han Sans CN", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+}
+
+.h10{
+  height: 10px;
+  background: transparent;
+}
+
+.mt10{
+  margin-top: 10px;
+}
+
+.mt46{
+  margin-top: 46px;
+}
+
+.mb10{
+  margin-bottom: 10px;
+}
+
+.m28 {
+  margin:28px;
+}
+
+.fixed {
+  width: 100%;
+  position: fixed;
+  z-index: 3;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-items-center {
+  display: flex;
+  align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-space-around {
+  display: flex;
+  justify-content: space-around;
+}
+
+.flex-space-evenly {
+  display: flex;
+  justify-content:space-evenly;
+}
+
+.flex-space-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
