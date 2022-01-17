@@ -178,19 +178,19 @@
       let resultStr = '';
 
       for (let i in areaList.province_list) {
-        if ( i == formValidateObj?.Address?.Province ) {
+        if ( formValidateObj.Address && formValidateObj.Address.Province && i == formValidateObj.Address.Province ) {
           resultStr += areaList.province_list[i];
         }
       }
 
       for (let i in areaList.city_list) {
-        if ( i == formValidateObj?.Address?.City ) {
+        if ( formValidateObj.Address && formValidateObj.Address.City && i == formValidateObj.Address.City ) {
           resultStr += '/'+areaList.city_list[i];
         }
       }
 
       for (let i in areaList.county_list) {
-        if ( i == formValidateObj?.Address?.Area ) {
+        if ( formValidateObj.Address && formValidateObj.Address.Area && i == formValidateObj.Address.Area ) {
           resultStr += '/'+areaList.county_list[i];
         }
       }
