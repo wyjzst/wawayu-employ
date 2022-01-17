@@ -2,6 +2,7 @@
   <div class="main mt46">
     <van-nav-bar
         fixed="fixed"
+        z-index="99"
         title="个人资料"
         left-text="返回"
         left-arrow
@@ -73,7 +74,7 @@
           closable
           :disable-transitions="false"
           @close="handleClose(tag)"
-          style="margin-left:10px;"
+          style="margin:0 0 5px 10px;"
       >
         {{ tag }}
       </el-tag>

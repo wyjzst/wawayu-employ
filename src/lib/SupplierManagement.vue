@@ -503,4 +503,8 @@
     margin-top: 10px;
     text-align: center;
   }
+
+  .van-dropdown-menu__bar {
+
+  }
 </style>
